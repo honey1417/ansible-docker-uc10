@@ -1,0 +1,39 @@
+- name: Install Docker, Build and Deploy Application Container
+  hosts: all
+  become: yes
+  tasks:
+    - name: Install required packages
+      yum:
+        name:
+          - yum-utils
+          - git
+        state: present
+
+    - name: Add Docker repository
+      command: yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+
+    - name: Install Docker
+      yum:
+        name:
+          - docker-ce
+          - docker-ce-cli
+          - containerd.io
+        state: present
+
+    - name: Start and enable Docker service
+      systemd:
+        name: docker
+        state: started
+        enabled: yes
+
+    - name: Add Jenkins user to Docker group
+      user:
+        name: jenkins
+        groups: docker
+        append: yes
+
+    - name: Pull Docker Image from Docker Hub
+      command: docker pull harshini1402/demo-app:v4
+
+    - name: Run Docker Container
+      command: docker run -d --name dockercont1 -p 9000:80 harshini1402/demo-app:v4
