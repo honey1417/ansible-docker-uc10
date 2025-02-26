@@ -1,0 +1,54 @@
+- name: Install Docker, Build and Deploy Application Container
+  hosts: all
+  become: yes
+  vars_files:
+    - vault.yml  # Load encrypted vault file
+
+  tasks:
+
+    - name: Install required packages
+      yum:
+        name:
+          - yum-utils
+          - git
+        state: present
+
+    - name: Add Docker repository
+      command: yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+
+    - name: Install Docker
+      yum:
+        name:
+          - docker-ce
+          - docker-ce-cli
+          - containerd.io
+        state: present
+
+    - name: Start and enable Docker service
+      systemd:
+        name: docker
+        state: started
+        enabled: yes
+
+    - name: Clone GitHub repository
+      git:
+        repo: "https://github.com/honey1417/ansible-docker.git"
+        dest: "/opt/ansible-docker"
+        version: main
+        force: yes
+
+    - name: Build Docker Image
+      command: docker build -t "{{ docker_hub_username }}/demo-app:v3" /opt/ansible-docker
+
+    - name: Login to Docker Hub Securely
+      command: echo "{{ docker_hub_password }}" | docker login -u "{{ docker_hub_username }}" --password-stdin
+
+    - name: Push Docker Image to Docker Hub
+      command: docker push harshini1402/demo-app:v3
+      
+    - name: Pull Docker Image from Docker Hub
+      command: docker pull harshini1402/demo-app:v3
+
+    - name: Run Docker Container
+      command: docker run -d --name myapp_container -p 80:80 harshini1402/demo-app:v3
+
