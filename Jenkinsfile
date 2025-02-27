@@ -6,6 +6,9 @@ pipeline {
         DOCKER_HUB_PSW = credentials('docker-creds')  // Jenkins credential ID for Docker password
         ANSIBLE_PRIVATE_KEY = credentials('ansible_ssh_key') // Jenkins credential ID for SSH key
     }
+    tools {
+        git 'Git'
+    }
 
     stages {
         stage('Clone Repository') {
