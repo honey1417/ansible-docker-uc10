@@ -13,7 +13,7 @@ pipeline {
     stages {
         stage('Clone Repository') {
             steps {
-                git 'https://github.com/honey1417/ansible-docker.git'
+                git branch: 'main', url: 'https://github.com/honey1417/ansible-docker.git'
             }
         }
 
