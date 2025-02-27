@@ -35,7 +35,7 @@ pipeline {
         stage('Run Ansible Playbook') {
             steps {
                 ansiblePlaybook (
-                    playbook: 'playbook2.yml'  
+                    playbook: 'playbook2.yml',
                     extras: '--private-key=$ANSIBLE_PRIVATE_KEY -u jenkins'
                 )                
             }
