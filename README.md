@@ -23,7 +23,7 @@ echo "jenkins ALL=(ALL) NOPASSWD: ALL" | sudo tee /etc/sudoers.d/jenkins
 sudo chmod 440 /etc/sudoers.d/jenkins
 ```
 Set Up SSH Access for Jenkins User
-````
+```
 sudo chmod 700 /home/jenkins/.ssh
 
 sudo chown -R jenkins:jenkins /home/jenkins/.ssh
@@ -35,9 +35,9 @@ Set correct permissions:
 ```
 sudo chmod 600 /home/jenkins/.ssh/authorized_keys
 sudo chown -R jenkins:jenkins /home/jenkins/.ssh
-
 sudo nano /etc/ssh/sshd_config
 ```
+
 Ensure these lines exist and are not commented out
 ```
 PubkeyAuthentication yes
