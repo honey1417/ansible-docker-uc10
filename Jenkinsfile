@@ -16,7 +16,7 @@ pipeline {
       stage('Build Docker Image') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'docker-creds', passwordVariable: 'DOCKER_HUB_PSW', usernameVariable: 'DOCKER_HUB_USR')]) {
-                    sh 'docker build -t $DOCKER_HUB_USR/demo-app:v4 .'
+                    sh 'docker build -t $DOCKER_HUB_USR/demo-app:v5 .'
                 }
             }
         }
@@ -32,7 +32,7 @@ pipeline {
         stage('Push Image to Docker Hub') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'docker-creds', passwordVariable: 'DOCKER_HUB_PSW', usernameVariable: 'DOCKER_HUB_USR')]) {
-                    sh 'docker push $DOCKER_HUB_USR/demo-app:v4'
+                    sh 'docker push $DOCKER_HUB_USR/demo-app:v5'
                 }
             }
         }
