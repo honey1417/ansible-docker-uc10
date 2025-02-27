@@ -33,7 +33,7 @@
         append: yes
 
     - name: Pull Docker Image from Docker Hub
-      command: docker pull harshini1402/demo-app:v4
+      command: docker pull harshini1402/demo-app:v5
 
     - name: Run Docker Container
-      command: docker run -d --name dockercont1 -p 9000:80 harshini1402/demo-app:v4
+      command: docker run -d --name dockercont2 -p 9001:80 harshini1402/demo-app:v5    #change tags and container name to run again
